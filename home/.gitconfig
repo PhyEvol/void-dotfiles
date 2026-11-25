@@ -1,7 +1,3 @@
-[user]
-	name = Tu Nombre
-	email = tu@correo.com
-
 [init]
 	defaultBranch = main
 
@@ -14,3 +10,6 @@
 
 [pull]
 	rebase = false
+
+[include]
+	path = ~/.gitconfig.local

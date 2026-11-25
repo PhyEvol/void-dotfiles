@@ -40,6 +40,17 @@ Antes de aplicar nada puedes ver qué va a hacer:
 ./install.sh --dry-run
 ```
 
+## Git
+
+El repo instala `~/.gitconfig` con ajustes comunes. La identidad y las
+credenciales van aparte, en `~/.gitconfig.local`, que no se sube:
+
+```ini
+[user]
+	name = Tu Nombre
+	email = tu@correo
+```
+
 ## Notas
 
 - El cursor `MeguminCursor` no está en el repo porque pesa ~94 MB. Está en
