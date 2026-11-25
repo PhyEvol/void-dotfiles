@@ -1,0 +1,8 @@
+{
+    "tabsize": 2,
+    "tabstospaces": true,
+    "autoindent": true,
+    "autoclose": true,
+    "syntax": true,
+    "colorscheme": "monokai"
+}

@@ -1,0 +1,106 @@
+# ---------------------------------------------------------------------------
+# Escritorio base para Void Linux (mango + noctalia + alacritty)
+# Instalación: sudo ./bootstrap.sh
+# ---------------------------------------------------------------------------
+base-system
+intel-ucode
+linux7.3
+linux-firmware
+void-repo-nonfree
+void-repo-multilib
+void-repo-multilib-nonfree
+sudo
+zsh
+git
+openssh
+curl
+wget
+unzip
+zip
+bat
+tree
+fzf
+starship
+fastfetch
+btop
+cava
+chafa
+micro
+helix
+python3
+
+# Wayland / compositor / shell
+mangowc
+noctalia
+sddm
+xorg-server
+xorg-server-xwayland
+dbus
+elogind
+polkit
+xdg-utils
+xdg-user-dirs
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+xdg-desktop-portal-wlr
+
+# Terminal y fuentes
+alacritty
+foot
+font-iosevka
+noto-fonts-ttf
+noto-fonts-ttf-extra
+noto-fonts-cjk
+noto-fonts-emoji
+
+# Audio, vídeo y utilidades de escritorio
+pipewire
+wireplumber
+alsa-pipewire
+wiremix
+playerctl
+brightnessctl
+libnotify
+mako
+grim
+slurp
+wl-clipboard
+upower
+tlp
+zramen
+chrony
+
+# Red y Bluetooth
+iwd
+bluez
+libspa-bluetooth
+
+# Gráficos (Intel)
+mesa-dri
+mesa-vulkan-intel
+intel-media-driver
+libva-utils
+
+# Aplicaciones
+mpv
+zathura
+zathura-pdf-mupdf
+dolphin
+pcmanfm-qt
+qt5ct
+qt6ct
+qt5-wayland
+qt6-wayland
+gst-libav
+gst-plugins-ugly1
+ffmpeg
+flatpak
+
+# Opcionales: descomenta si los usas
+# cups
+# cups-filters
+# system-config-printer
+# gutenprint
+# epson-inkjet-printer-escpr
+# libvirt
+# virt-manager

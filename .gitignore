@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# Secretos y credenciales: NUNCA versionar
+# ---------------------------------------------------------------------------
+.ssh/
+**/.ssh/
+**/id_rsa
+**/id_ed25519
+**/id_ecdsa
+**/*.pem
+**/*.key
+**/*token*
+**/*_token
+**/service.json
+**/.claude
+**/.claude.json
+**/.git-credentials
+**/.netrc
+**/known_hosts
+**/known_hosts.old
+**/.litecord_token
+
+# ---------------------------------------------------------------------------
+# Historiales, cachés y estado local
+# ---------------------------------------------------------------------------
+**/.zsh_history
+**/.bash_history
+**/*_history
+**/.cache/
+**/.local/state/
+**/.local/share/
+**/.dbus/
+**/.pki/
+**/.npm/
+**/.java/
+**/.mono/
+**/.wine/
+**/.steam/
+**/SteamLibrary/
+**/.var/
+**/.mozilla/
+**/.thunderbird/
+**/.config/vesktop/
+**/.config/litecord/
+**/.config/dconf/
+**/.config/pulse/
+**/.config/procps/
+
+# ---------------------------------------------------------------------------
+# Basura y backups
+# ---------------------------------------------------------------------------
+*.bak
+*.bak.*
+*.swp
+*.swo
+*~
+.DS_Store
+.idea/
+.vscode/
+dotfiles-backup/

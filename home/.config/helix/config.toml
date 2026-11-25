@@ -1,0 +1,22 @@
+theme = "base16_terminal"
+
+[editor]
+line-number = "relative"
+bufferline = "multiple"
+color-modes = true
+trim-trailing-whitespace = true
+trim-final-newlines = true
+insert-final-newline = true
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+
+[editor.whitespace.render]
+space = "none"
+tab = "all"
+newline = "none"
+
+[editor.indent-guides]
+render = true
+character = "▏"

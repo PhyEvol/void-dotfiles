@@ -1,0 +1,36 @@
+[general]
+import = ["~/.config/alacritty/themes/noctalia.toml"]
+
+# Solo si quieres forzar fondo negro sobre el tema:
+[colors.primary]
+background = "#000000"
+
+[window]
+opacity = 0.60
+padding = { x = 14, y = 14 }
+dynamic_padding = true
+decorations = "None"
+
+[font]
+size = 13.0
+normal = { family = "Iosevka Term", style = "Regular" }
+
+[scrolling]
+history = 20000
+
+[selection]
+save_to_clipboard = true
+
+[terminal]
+osc52 = "CopyPaste"
+
+[mouse]
+hide_when_typing = true
+
+[cursor]
+blink_interval = 550
+blink_timeout = 5
+
+[cursor.style]
+shape = "Beam"
+blinking = "On"

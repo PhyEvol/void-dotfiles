@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+SOUND="$HOME/Music/youtube/worry-l.opus"
+VOLUME="1.0"
+
+[ -f "$SOUND" ] || { notify-send "mango-sound" "No existe: $SOUND"; exit 1; }
+
+# Si ya está sonando, lo detiene y sale
+if pgrep -f "pw-play.*$SOUND" >/dev/null; then
+    pkill -f "pw-play.*$SOUND"
+    exit 0
+fi
+
+if command -v pw-play >/dev/null; then
+    exec pw-play --volume "$VOLUME" "$SOUND"
+elif command -v paplay >/dev/null; then
+    exec paplay "$SOUND"
+else
+    notify-send "mango-sound" "Falta pw-play o paplay"
+    exit 1
+fi

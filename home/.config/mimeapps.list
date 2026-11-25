@@ -1,0 +1,10 @@
+[Default Applications]
+x-scheme-handler/discord=vesktop.desktop
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
+x-scheme-handler/mailto=userapp-Thunderbird-KLM1W3.desktop
+message/rfc822=userapp-Thunderbird-KLM1W3.desktop
+x-scheme-handler/mid=userapp-Thunderbird-KLM1W3.desktop
+
+[Added Associations]
+x-scheme-handler/mailto=userapp-Thunderbird-KLM1W3.desktop;
+x-scheme-handler/mid=userapp-Thunderbird-KLM1W3.desktop;

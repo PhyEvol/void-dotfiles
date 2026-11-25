@@ -1,0 +1,16 @@
+[user]
+	name = Tu Nombre
+	email = tu@correo.com
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = micro
+	autocrlf = false
+
+[color]
+	ui = auto
+
+[pull]
+	rebase = false

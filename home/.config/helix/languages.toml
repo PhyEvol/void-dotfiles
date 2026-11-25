@@ -1,0 +1,16 @@
+[language-server.clangd]
+command = "clangd"
+args = [
+  "--background-index",
+  "--clang-tidy",
+  "--header-insertion=never",
+  "--completion-style=detailed",
+]
+
+[[language]]
+name = "c"
+language-servers = ["clangd"]
+auto-format = true
+indent = { tab-width = 2, unit = "  " }
+formatter = { command = "clang-format", args = ["--style=file", "--fallback-style=GNU"] }
+rulers = [79]

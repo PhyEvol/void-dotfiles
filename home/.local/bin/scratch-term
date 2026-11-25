@@ -1,0 +1,11 @@
+#!/bin/sh
+# Terminal desplegable en el scratchpad de Sway
+if ! swaymsg -t get_tree | grep -q '"app_id": *"scratch"'; then
+    alacritty --class scratch >/dev/null 2>&1 &
+    # Esperar a que la ventana aparezca (máx. ~1 s)
+    for i in 1 2 3 4 5 6 7 8 9 10; do
+        sleep 0.1
+        swaymsg -t get_tree | grep -q '"app_id": *"scratch"' && break
+    done
+fi
+swaymsg '[app_id="scratch"] scratchpad show'

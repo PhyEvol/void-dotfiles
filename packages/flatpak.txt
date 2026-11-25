@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Aplicaciones Flatpak
+# bootstrap.sh --flatpak instala solo las de Flathub.
+# Las de repos personalizados hay que añadirlos a mano.
+# ---------------------------------------------------------------------------
+app.legcord.Legcord
+com.github.tchx84.Flatseal
+io.github.nozwock.Packet
+io.gitlab.librewolf-community
+
+# Repos personalizados (no se instalan automáticamente):
+# io.github.augustligh.LLauncher          -> repo llauncher
+# moe.launcher.an-anime-game-launcher     -> repo anime-games-launcher-origin
+# moe.launcher.anime-games-launcher       -> repo anime-games-launcher-origin
