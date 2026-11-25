@@ -1,125 +1,80 @@
-# Dotfiles de affe
+# void-dotfiles
 
-Configuración personal de **Void Linux** con **mango** como compositor Wayland,
-**noctalia** como shell/barra y **alacritty** como terminal. El objetivo es poder
-reinstalar el escritorio en pocos minutos y mantener todo versionado.
+Mis dotfiles de Void Linux. Los uso a diario en un Aspire AL14-31P.
 
-![Void Linux](https://img.shields.io/badge/Void-Linux-478061?style=flat-square)
-![Wayland](https://img.shields.io/badge/Wayland-mango-89cc66?style=flat-square)
-![Shell](https://img.shields.io/badge/shell-zsh-f3f2f2?style=flat-square)
+- WM: mango
+- Barra/shell: noctalia
+- Terminal: alacritty
+- Shell: zsh + starship
+- Editor: helix (y micro/zed para cosas puntuales)
+- Fuente: Iosevka
 
-## Qué incluye
+## Instalación
 
-| Área | Archivos |
-|---|---|
-| Shell | `.zshrc`, `starship.toml` |
-| Compositor | `.config/mango/config.toml` |
-| Barra / shell | `.config/noctalia/config.toml` |
-| Terminal | `.config/alacritty/` (tema incluido) |
-| TUI | `fastfetch`, `btop`, `cava`, `micro`, `helix` |
-| Apps | `mpv`, `zed`, `zathura`, `mimeapps.list`, `kdeglobals` |
-| Scripts | `.local/bin/mango-sound`, `.local/bin/scratch-term` |
-| Fondos | `assets/wallpapers/` (3 favoritos) |
-| Sistema | `packages/` + `bootstrap.sh` |
-
-**No incluido a propósito:** claves SSH, tokens, historiales, cachés, datos de
-Steam/Wine/Flatpak, el cursor `MeguminCursor` (94 MB) y el script
-`~/bin/blizz-tunnel` (contiene alias e IPs internas).
-
-## Instalación rápida
+En un Void que ya funciona:
 
 ```sh
 git clone https://github.com/PhyEvol/void-dotfiles.git ~/Projects/Dotfiles
 cd ~/Projects/Dotfiles
-
-# 1. Paquetes y servicios (Void, requiere sudo)
-sudo ./bootstrap.sh
-
-# 2. Revisa qué hará y luego aplica
-./install.sh --dry-run
 ./install.sh
 ```
 
-Cierra sesión y vuelve a entrar (o reinicia) para que se apliquen grupos,
-servicios y el shell.
+`install.sh` crea symlinks en `$HOME` y guarda lo que ya existiera en
+`~/.dotfiles-backup/<fecha>/`. También copia los fondos a `~/Pictures/Wallpapers`
+y clona los plugins de zsh.
 
-### Opciones de `bootstrap.sh`
-
-```sh
-sudo ./bootstrap.sh              # paquetes base del escritorio
-sudo ./bootstrap.sh --full       # snapshot completo de paquetes manuales
-sudo ./bootstrap.sh --flatpak    # apps de Flathub
-sudo ./bootstrap.sh --cups       # activa CUPS
-sudo ./bootstrap.sh --libvirt    # activa libvirt
-./bootstrap.sh --dry-run         # simulación sin sudo
-```
-
-### Opciones de `install.sh`
+Si estás reinstalando desde cero:
 
 ```sh
-./install.sh                 # symlinks + backup automático
-./install.sh --dry-run       # muestra las acciones
-./install.sh --force         # reemplaza sin backup
-./install.sh --set-shell     # cambia tu shell a zsh
-./install.sh --skip-plugins  # no clona plugins de zsh
+sudo ./bootstrap.sh
+./install.sh
 ```
 
-Los archivos existentes se guardan en `~/.dotfiles-backup/<fecha>/`.
-Los plugins `zsh-autosuggestions` y `zsh-syntax-highlighting` se clonan en
-`~/.zsh/` con un commit fijado.
+`bootstrap.sh` instala lo de `packages/void-desktop.txt`, activa los servicios
+(sddm, iwd, bluetoothd, tlp, zramen, etc.) y agrega tu usuario a los grupos.
+Con `--full` usa el snapshot completo de paquetes.
 
-## Pasos manuales
+Antes de aplicar nada puedes ver qué va a hacer:
 
-### 1. Nya
+```sh
+./install.sh --dry-run
+```
 
-### 2. Tema de SDDM
+## Notas
 
-El tema `sword` vive en `/usr/share/sddm/themes` y no forma parte del repo.
-Si quieres replicarlo, cópialo aparte con permisos de root.
+- El cursor `MeguminCursor` no está en el repo porque pesa ~94 MB. Está en
+  `~/.local/share/icons` y hay que copiarlo aparte.
+- `~/bin/blizz-tunnel` tampoco está: tiene alias e IPs internas.
+- Si tu usuario no es `affe`, `install.sh` reemplaza las rutas absolutas de
+  mango, noctalia, fastfetch y `.zshrc`.
+- Noctalia regenera los temas de alacritty, btop, helix, qt y starship cuando
+  cambias el tema. Si editas esos archivos a mano, pueden sobrescribirse.
+- El tema de SDDM (`sword`) y el cursor son ajustes manuales.
+- `scratch-term` es de cuando usaba sway; mango ya tiene scratchpad nativo.
 
-### 3. Monitor y teclado
-
-Ajusta `[[rule.monitor_rule]]` en `~/.config/mango/config.toml` según tu
-pantalla (`wlr-randr`). El layout de teclado está en `latam`.
-
-### 4. Si tu usuario no es `affe`
-
-`install.sh` detecta `$HOME` distinto de `/home/affe` y reemplaza las rutas
-absolutas en `mango`, `noctalia`, `fastfetch` y `.zshrc`. Como esos archivos son
-symlinks, el cambio se refleja en el repo: revísalo con `git diff` antes de
-commitear.
-
-## Atajos principales de mango
+## Atajos
 
 | Atajo | Acción |
 |---|---|
-| `SUPER + Return` | Alacritty |
-| `SUPER + d` | Lanzador de noctalia |
-| `SUPER + q` | Cerrar ventana |
-| `SUPER + r` | Recargar configuración |
-| `SUPER + h/j/k/l` | Mover foco |
-| `SUPER + 1..9` | Ir al tag |
-| `SUPER + SHIFT + 1..9` | Mover ventana al tag |
-| `SUPER + f` | Pantalla completa |
-| `SUPER + SHIFT + space` | Flotante |
-| `SUPER + SHIFT + s` | Captura de área al portapapeles |
-| `Print` | Captura de pantalla completa |
-| `SUPER + SHIFT + p` | Sonido `mango-sound` |
+| `SUPER + Return` | alacritty |
+| `SUPER + d` | lanzador de noctalia |
+| `SUPER + q` | cerrar ventana |
+| `SUPER + r` | recargar mango |
+| `SUPER + h/j/k/l` | mover foco |
+| `SUPER + 1..9` | ir al tag |
+| `SUPER + SHIFT + 1..9` | mover ventana al tag |
+| `SUPER + f` | pantalla completa |
+| `SUPER + SHIFT + space` | flotante |
+| `SUPER + SHIFT + s` | captura de área |
+| `Print` | captura de pantalla completa |
+| `SUPER + SHIFT + p` | mango-sound |
 
 ## Estructura
 
 ```
-.
-├── install.sh              # symlinks, backups, plugins, wallpapers
-├── bootstrap.sh            # paquetes y servicios de Void
-├── gitconfig.example
-├── packages/
-│   ├── void-desktop.txt    # lista curada
-│   ├── void-full.txt       # snapshot completo
-│   └── flatpak.txt
-├── home/                   # se enlaza dentro de $HOME
-│   ├── .zshrc
-│   ├── .config/...
-│   ├── .local/bin/...
-└── assets/wallpapers/
+install.sh              # symlinks, backups, plugins, wallpapers
+bootstrap.sh            # paquetes y servicios de Void
+packages/               # listas de paquetes
+home/                   # lo que se enlaza en $HOME
+assets/wallpapers/      # fondos
 ```
