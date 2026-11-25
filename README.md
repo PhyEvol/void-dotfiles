@@ -32,7 +32,8 @@ sudo ./bootstrap.sh
 
 `bootstrap.sh` instala lo de `packages/void-desktop.txt`, activa los servicios
 (sddm, iwd, bluetoothd, tlp, zramen, etc.) y agrega tu usuario a los grupos.
-Con `--full` usa el snapshot completo de paquetes.
+Con `--full` usa el snapshot completo de paquetes. Si lo ejecutas desde una
+sesión root sin `sudo`, indica tu usuario con `--user TU_USUARIO`.
 
 Antes de aplicar nada puedes ver qué va a hacer:
 
@@ -53,14 +54,21 @@ credenciales van aparte, en `~/.gitconfig.local`, que no se sube:
 
 ## Notas
 
+- Las configuraciones usan `~` y `$HOME`; no hay rutas con un usuario concreto.
+  Puedes clonar el repo en cualquier carpeta y usar cualquier nombre de usuario.
 - El cursor `MeguminCursor` no está en el repo porque pesa ~94 MB. Está en
   `~/.local/share/icons` y hay que copiarlo aparte.
 - `~/bin/blizz-tunnel` tampoco está: tiene alias e IPs internas.
-- Si tu usuario no es `affe`, `install.sh` reemplaza las rutas absolutas de
-  mango, noctalia, fastfetch y `.zshrc`.
+- `packages/void-desktop.txt` trae Intel por defecto. Si tienes AMD o NVIDIA,
+  comenta el bloque de Intel y descomenta el tuyo antes de ejecutar
+  `bootstrap.sh`.
+- mango viene con layout `latam` y touchpad activado. Si no te sirve, cambia
+  `xkb_rules_layout` en `home/.config/mango/config.toml`.
+- `mango-sound` usa `$MANGO_SOUND`, un archivo en `~/Music` o la campana del
+  sistema. También puedes pasarle una ruta: `mango-sound ~/audio.mp3`.
 - Noctalia regenera los temas de alacritty, btop, helix, qt y starship cuando
   cambias el tema. Si editas esos archivos a mano, pueden sobrescribirse.
-- El tema de SDDM (`sword`) y el cursor son ajustes manuales.
+- El tema de SDDM y el cursor son ajustes manuales.
 - `scratch-term` es de cuando usaba sway; mango ya tiene scratchpad nativo.
 
 ## Atajos

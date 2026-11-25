@@ -3,8 +3,7 @@
 # Instalación: sudo ./bootstrap.sh
 # ---------------------------------------------------------------------------
 base-system
-intel-ucode
-linux7.3
+linux-lts
 linux-firmware
 void-repo-nonfree
 void-repo-multilib
@@ -75,11 +74,27 @@ iwd
 bluez
 libspa-bluetooth
 
-# Gráficos (Intel)
+# Gráficos base
 mesa-dri
+vulkan-loader
+libva-utils
+
+# ---------------------------------------------------------------------------
+# Hardware: deja lo de tu equipo y comenta el resto.
+# El kernel por defecto es linux-lts; si necesitas otro, cámbialo arriba por
+# linux (última versión estable) o linux-mainline.
+# ---------------------------------------------------------------------------
+# Intel (por defecto)
+intel-ucode
 mesa-vulkan-intel
 intel-media-driver
-libva-utils
+
+# AMD
+# linux-firmware-amd
+# mesa-vulkan-radeon
+
+# NVIDIA (nonfree)
+# nvidia-dkms
 
 # Aplicaciones
 mpv

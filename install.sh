@@ -177,27 +177,6 @@ install_plugins() {
     https://github.com/zsh-users/zsh-syntax-highlighting.git e6683f2
 }
 
-adapt_home_paths() {
-  [ "$DEST_HOME" = "/home/affe" ] && return 0
-
-  local rel f
-  log ""
-  log "== Adaptando rutas para $DEST_HOME =="
-  log "  AVISO: se modificarán archivos del repo (symlinks) para reemplazar"
-  log "         /home/affe por $DEST_HOME."
-
-  for rel in \
-    .config/mango/config.toml \
-    .config/noctalia/config.toml \
-    .config/fastfetch/config.jsonc \
-    .zshrc; do
-    f="$DEST_HOME/$rel"
-    [ -f "$f" ] || continue
-    log "  adaptando: $rel"
-    run sed -i --follow-symlinks "s|/home/affe|$DEST_HOME|g" "$f"
-  done
-}
-
 set_shell() {
   [ "$SET_SHELL" -eq 1 ] || return 0
 
@@ -208,7 +187,7 @@ set_shell() {
     return 0
   fi
 
-  current="$(getent passwd "$(id -un)" | cut -d: -f7)"
+  current="$(awk -F: -v u="$(id -un)" '$1 == u { print $7 }' /etc/passwd)"
   if [ "$current" = "$zsh_path" ]; then
     log "  ok: ya usas $zsh_path"
     return 0
@@ -237,7 +216,6 @@ while IFS= read -r -d '' src; do
 done < <(find "$SRC_DIR" -type f -print0 | sort -z)
 
 install_wallpapers
-adapt_home_paths
 [ "$SKIP_PLUGINS" -eq 0 ] && install_plugins
 set_shell
 

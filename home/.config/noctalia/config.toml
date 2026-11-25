@@ -15,9 +15,9 @@ enabled = false
 tint_intensity = 0.30000001192092896
 
 [bar]
-order = [ "default", "affe" ]
+order = [ "default", "main" ]
 
-    [bar.affe]
+    [bar.main]
     auto_hide = false
     background_opacity = 1.0
     border = "outline"
@@ -57,7 +57,7 @@ order = [ "default", "affe" ]
     thickness = 34
     widget_spacing = 6
 
-        [bar.affe.dead_zone]
+        [bar.main.dead_zone]
 
     [bar.default]
     auto_hide = false
@@ -667,7 +667,7 @@ wallpaper_scheme = "m3-content"
     enable_community_templates = true
 
 [wallpaper]
-directory = "/home/affe/Pictures/Wallpapers"
+directory = "~/Pictures/Wallpapers"
 directory_dark = ""
 directory_light = ""
 edge_smoothness = 0.30000001192092896

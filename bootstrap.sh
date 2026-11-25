@@ -19,12 +19,14 @@ FULL=0
 FLATPAK=0
 CUPS=0
 LIBVIRT=0
+TARGET_USER=""
 
 usage() {
   cat <<'EOF'
 Uso: sudo ./bootstrap.sh [opciones]
 
 Opciones:
+  --user NAME  Usuario al que aplicar grupos y shell (por defecto: $SUDO_USER).
   --full       Instala packages/void-full.txt (snapshot completo).
   --flatpak    Instala las apps de packages/flatpak.txt desde Flathub.
   --cups       Activa el servicio CUPS.
@@ -36,6 +38,11 @@ EOF
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
+    --user)
+      [ "$#" -ge 2 ] || { echo "Falta el nombre de usuario tras --user" >&2; exit 1; }
+      TARGET_USER="$2"
+      shift
+      ;;
     --full) FULL=1 ;;
     --flatpak) FLATPAK=1 ;;
     --cups) CUPS=1 ;;
@@ -69,13 +76,34 @@ if [ "${ID:-}" != "void" ]; then
   exit 1
 fi
 
-TARGET_USER="${SUDO_USER:-${USER:-}}"
+if [ -z "$TARGET_USER" ]; then
+  TARGET_USER="${SUDO_USER:-}"
+fi
+if [ -z "$TARGET_USER" ] && [ "$(id -u)" -ne 0 ]; then
+  TARGET_USER="$(id -un)"
+fi
 if [ -z "$TARGET_USER" ] || [ "$TARGET_USER" = "root" ]; then
-  echo "No puedo detectar tu usuario normal. Ejecuta: sudo ./bootstrap.sh" >&2
+  echo "No puedo detectar tu usuario normal. Usa: sudo ./bootstrap.sh --user TU_USUARIO" >&2
+  exit 1
+fi
+if ! id -u "$TARGET_USER" >/dev/null 2>&1; then
+  echo "El usuario '$TARGET_USER' no existe." >&2
   exit 1
 fi
 
-TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
+get_user_home() {
+  awk -F: -v u="$1" '$1 == u { print $6 }' /etc/passwd
+}
+
+get_user_shell() {
+  awk -F: -v u="$1" '$1 == u { print $7 }' /etc/passwd
+}
+
+TARGET_HOME="$(get_user_home "$TARGET_USER")"
+if [ -z "$TARGET_HOME" ]; then
+  echo "No encuentro el HOME de $TARGET_USER en /etc/passwd." >&2
+  exit 1
+fi
 log "Repositorio: $REPO_DIR"
 log "Usuario:     $TARGET_USER ($TARGET_HOME)"
 [ "$DRY_RUN" -eq 1 ] && log "Modo:        dry-run (sin cambios)"
@@ -147,7 +175,7 @@ TARGET_GROUPS=(wheel audio video bluetooth scanner lp)
 log ""
 log "== Grupos de $TARGET_USER =="
 for grp in "${TARGET_GROUPS[@]}"; do
-  getent group "$grp" >/dev/null 2>&1 || continue
+  grep -q "^$grp:" /etc/group || continue
   if id -nG "$TARGET_USER" | tr ' ' '\n' | grep -qx "$grp"; then
     log "  ok: $grp"
     continue
@@ -158,7 +186,7 @@ done
 
 ZSH_PATH="$(command -v zsh || true)"
 if [ -n "$ZSH_PATH" ]; then
-  CURRENT_SHELL="$(getent passwd "$TARGET_USER" | cut -d: -f7)"
+  CURRENT_SHELL="$(get_user_shell "$TARGET_USER")"
   if [ "$CURRENT_SHELL" != "$ZSH_PATH" ]; then
     log "  shell: $CURRENT_SHELL -> $ZSH_PATH"
     run chsh -s "$ZSH_PATH" "$TARGET_USER"
@@ -179,9 +207,14 @@ if [ "$FLATPAK" -eq 1 ]; then
     run flatpak remote-add --if-not-exists flathub \
       https://flathub.org/repo/flathub.flatpakrepo
     mapfile -t APPS < <(grep -vE '^[[:space:]]*(#|$)' "$REPO_DIR/packages/flatpak.txt")
-    if [ "${#APPS[@]}" -gt 0 ]; then
-      run flatpak install -y flathub "${APPS[@]}"
-    fi
+    for app in "${APPS[@]}"; do
+      if flatpak info "$app" >/dev/null 2>&1; then
+        log "  ok: $app"
+        continue
+      fi
+      run flatpak install -y flathub "$app" \
+        || log "  aviso: no se pudo instalar $app"
+    done
   fi
 fi
 
