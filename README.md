@@ -70,36 +70,19 @@ Los plugins `zsh-autosuggestions` y `zsh-syntax-highlighting` se clonan en
 
 ## Pasos manuales
 
-### 1. Identidad de Git
+### 1. Nya
 
-```sh
-cp gitconfig.example ~/.gitconfig
-$EDITOR ~/.gitconfig
-```
-
-### 2. Cursor MeguminCursor
-
-El tema de cursor no se versiona por tamaño. Cópialo desde un backup o desde tu
-equipo anterior:
-
-```sh
-mkdir -p ~/.local/share/icons
-cp -a /ruta/a/MeguminCursor ~/.local/share/icons/
-```
-
-`mango` ya está configurado para usar `MeguminCursor` con tamaño 36.
-
-### 3. Tema de SDDM
+### 2. Tema de SDDM
 
 El tema `sword` vive en `/usr/share/sddm/themes` y no forma parte del repo.
 Si quieres replicarlo, cópialo aparte con permisos de root.
 
-### 4. Monitor y teclado
+### 3. Monitor y teclado
 
 Ajusta `[[rule.monitor_rule]]` en `~/.config/mango/config.toml` según tu
 pantalla (`wlr-randr`). El layout de teclado está en `latam`.
 
-### 5. Si tu usuario no es `affe`
+### 4. Si tu usuario no es `affe`
 
 `install.sh` detecta `$HOME` distinto de `/home/affe` y reemplaza las rutas
 absolutas en `mango`, `noctalia`, `fastfetch` y `.zshrc`. Como esos archivos son
@@ -140,36 +123,3 @@ commitear.
 │   ├── .local/bin/...
 └── assets/wallpapers/
 ```
-
-## Actualizar los dotfiles
-
-```sh
-cd ~/Projects/Dotfiles
-git add -A
-git commit -m "Actualiza configuración"
-git push
-```
-
-## Publicar en GitHub
-
-`gh` no está empaquetado en los repos de Void; instala el binario oficial:
-
-```sh
-ver=2.105.0
-mkdir -p ~/.local/opt/gh-$ver
-curl -L "https://github.com/cli/cli/releases/download/v$ver/gh_${ver}_linux_amd64.tar.gz" \
-  | tar -xz --strip-components=1 -C ~/.local/opt/gh-$ver
-ln -sf ~/.local/opt/gh-$ver/bin/gh ~/.local/bin/gh
-
-gh auth login
-gh repo create void-dotfiles --public --source=. --remote=origin --push
-```
-
-## Notas
-
-- noctalia regenera plantillas de tema para alacritty, btop, gtk, helix, qt,
-  starship y sway. Si editas esos archivos a mano, pueden sobrescribirse al
-  cambiar el tema desde noctalia.
-- Los wallpapers se copian a `~/Pictures/Wallpapers` y noctalia apunta ahí.
-- Antes de hacer un commit público, revisa que no haya secretos:
-  `git status` y una búsqueda de `token`, `password` o `secret`.
